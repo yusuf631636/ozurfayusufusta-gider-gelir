@@ -1,0 +1,1 @@
+# ozurfayusufusta-gider-gelir
