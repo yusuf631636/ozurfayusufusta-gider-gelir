@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Öz Urfa Kebap | Nisan 2026 Kesin Kar Zarar Paneli</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 30px 20px;
+            color: #1a2a3a;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header */
+        .brand {
+            background: white;
+            border-radius: 32px;
+            padding: 24px 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        h1 small {
+            background: #fef3c7;
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .sub {
+            color: #4a627a;
+            border-left: 4px solid #f97316;
+            padding-left: 16px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* butonlar */
+        .button-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 28px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #2c3e4e;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn i { font-style: normal; font-size: 1.1rem; }
+
+        .btn.active {
+            background: #f97316;
+            color: white;
+            border-color: #f97316;
+            box-shadow: 0 8px 18px rgba(249,115,22,0.25);
+        }
+
+        .btn:hover:not(.active) {
+            background: #fff3e6;
+            border-color: #fdba74;
+            transform: translateY(-2px);
+        }
+
+        /* kart içerikleri */
+        .content-card {
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 28px;
+            transition: all 0.2s;
+        }
+
+        .card-header {
+            background: #fef9e8;
+            padding: 18px 28px;
+            border-bottom: 2px solid #ffedd5;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #9b4a06;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-body {
+            padding: 24px 28px;
+        }
+
+        /* tablolar */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #1e4a6e;
+            border-bottom: 2px solid #e2edf7;
+        }
+
+        td {
+            padding: 12px 12px;
+            border-bottom: 1px solid #eff3f8;
+        }
+
+        .amount-right {
+            text-align: right;
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .method-nakit {
+            background: #e0f2e9;
+            color: #1e6f3f;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .method-kredi {
+            background: #e1f0fa;
+            color: #1b6b9e;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .total-row {
+            background: #fef9e8;
+            font-weight: 800;
+            border-top: 2px solid #fbbf24;
+        }
+
+        .summary-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 180px;
+            background: white;
+            border-radius: 28px;
+            padding: 18px 20px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f0;
+            transition: 0.2s;
+        }
+
+        .stat-card h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6c86a3;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e2f3e;
+        }
+
+        .profit {
+            background: linear-gradient(135deg, #1f3b2c, #2b5a42);
+            color: white;
+        }
+        .profit .stat-number { color: #facc15; }
+
+        .result-badge {
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .warning-note {
+            background: #fffbeb;
+            border-left: 6px solid #eab308;
+            padding: 14px 20px;
+            border-radius: 18px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #5f7d9c;
+            padding: 24px 0 10px;
+            border-top: 1px solid #e2edf2;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .card-body { padding: 16px; }
+            .stat-number { font-size: 1.4rem; }
+            .btn { padding: 8px 16px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="brand">
+        <h1>
+            🧾 ÖZ URFA KEBAP
+            <small>Nisan 2026 · Kesin Kar Zarar</small>
+        </h1>
+        <div class="sub">📊 Ciro + Personel + Nakit/Kredi Kartı Giderleri · Gerçek PDF verisiyle net sonuç</div>
+    </div>
+
+    <!-- buton paneli -->
+    <div class="button-bar">
+        <button class="btn active" data-tab="overview">🏠 Genel Özet & Kâr</button>
+        <button class="btn" data-tab="personel">👥 Personel Giderleri</button>
+        <button class="btn" data-tab="nakit">💰 Nakit Giderler (Kasadan)</button>
+        <button class="btn" data-tab="kredi">💳 Kredi Kartı & EFT Giderleri</button>
+        <button class="btn" data-tab="allgider">📋 Tüm Giderler (Nakit+Kredi)</button>
+    </div>
+
+    <!-- Dinamik içerik alanı -->
+    <div id="tabContent"></div>
+
+    <!-- dipnot -->
+    <div class="footer">
+        ⚡ Öz Urfa Kebap | Nisan 2026 · Personel günlük × 30 gün (Gamze 10 gün) <br>
+        📌 Kira 45.000 TL bu tabloya dahil değildir (Nisan'da ödenmemiştir) · Yusuf Usta'ya 110.820 TL borç notu bilgisi.
+    </div>
+</div>
+
+<script>
+    // ---------- 1. PERSONEL VERİLERİ ----------
+    const personnel = [
+        { name: "Yılmaz Usta", daily: 2500, days: 30, total: 75000 },
+        { name: "Ahmet Usta", daily: 2500, days: 30, total: 75000 },
+        { name: "Hasan Garson", daily: 1800, days: 30, total: 54000 },
+        { name: "Bulaşıkçı Abla", daily: 1100, days: 30, total: 33000 },
+        { name: "Yusuf Usta", daily: 2000, days: 30, total: 60000 },
+        { name: "Kasım Usta", daily: 2000, days: 30, total: 60000 },
+        { name: "Gamze Garson", daily: 900, days: 10, total: 9000 }
+    ];
+    const totalPersonnel = 366000; // 75k+75k+54k+33k+60k+60k+9k
+
+    // ---------- 2. NAKİT GİDERLER (sadece nakit - PDF'den) ----------
+    const nakitTransactions = [
+        { date: "01.04.2026 14:12:60", desc: "biber", amount: 170 },
+        { date: "01.04.2026 18:06:00", desc: "market", amount: 300 },
+        { date: "01.04.2026 20:28:60", desc: "pazar yılmaz", amount: 1650 },
+        { date: "01.04.2026 20:46:00", desc: "sogan", amount: 3000 },
+        { date: "01.04.2026 20:50:00", desc: "tornavıta", amount: 100 },
+        { date: "02.04.2026 13:07:00", desc: "ilaçlama", amount: 2000 },
+        { date: "02.04.2026 20:03:60", desc: "market", amount: 1000 },
+        { date: "02.04.2026 20:03:60", desc: "pazar yılmaz", amount: 1550 },
+        { date: "03.04.2026 12:13:60", desc: "maya", amount: 450 },
+        { date: "03.04.2026 18:45:60", desc: "yag", amount: 410 },
+        { date: "04.04.2026 20:26:60", desc: "Pazar", amount: 1300 },
+        { date: "05.04.2026 13:29:00", desc: "yag", amount: 410 },
+        { date: "05.04.2026 13:29:00", desc: "bulgur", amount: 200 },
+        { date: "05.04.2026 14:44:60", desc: "şeker", amount: 105 },
+        { date: "07.04.2026 11:24:00", desc: "yağ", amount: 410 },
+        { date: "07.04.2026 11:46:60", desc: "yumurta", amount: 100 },
+        { date: "07.04.2026 17:28:60", desc: "kunefe", amount: 1000 },
+        { date: "07.04.2026 20:53:60", desc: "pazar yılmaz", amount: 2000 },
+        { date: "08.04.2026 14:48:00", desc: "çay", amount: 220 },
+        { date: "08.04.2026 15:33:00", desc: "yağ", amount: 410 },
+        { date: "08.04.2026 16:30:60", desc: "zınpara", amount: 65 },
+        { date: "08.04.2026 18:29:00", desc: "sogan", amount: 2000 },
+        { date: "09.04.2026 11:48:00", desc: "market", amount: 250 },
+        { date: "09.04.2026 16:03:60", desc: "yogurt", amount: 110 },
+        { date: "09.04.2026 18:29:00", desc: "salça", amount: 100 },
+        { date: "09.04.2026 20:48:00", desc: "pazar yılmaz", amount: 1900 },
+        { date: "10.04.2026 18:06:60", desc: "kunefe", amount: 500 },
+        { date: "10.04.2026 20:53:00", desc: "market yılmaz", amount: 300 },
+        { date: "11.04.2026 19:18:00", desc: "pazar yılmaz", amount: 1100 },
+        { date: "11.04.2026 19:18:00", desc: "makbul", amount: 200 },
+        { date: "12.04.2026 20:51:00", desc: "sogan", amount: 1500 },
+        { date: "14.04.2026 14:30:00", desc: "domates", amount: 1200 },
+        { date: "14.04.2026 15:51:60", desc: "künefe", amount: 800 },
+        { date: "14.04.2026 20:51:00", desc: "pazar yılmaz", amount: 1500 },
+        { date: "15.04.2026 17:30:60", desc: "çig köfte", amount: 700 },
+        { date: "15.04.2026 20:24:00", desc: "yag", amount: 410 },
+        { date: "15.04.2026 20:24:00", desc: "market", amount: 380 },
+        { date: "16.04.2026 19:43:00", desc: "sogan", amount: 5300 },
+        { date: "16.04.2026 20:28:00", desc: "pazar yılmaz", amount: 950 },
+        { date: "17.04.2026 13:39:60", desc: "yağ", amount: 410 },
+        { date: "18.04.2026 14:44:60", desc: "yağ", amount: 410 },
+        { date: "19.04.2026 17:59:00", desc: "deterjan", amount: 150 },
+        { date: "19.04.2026 20:53:00", desc: "pazar yılmaz", amount: 1650 },
+        { date: "21.04.2026 12:09:60", desc: "yağ", amount: 410 },
+        { date: "21.04.2026 18:29:00", desc: "yılmaz Pazar", amount: 2130 },
+        { date: "22.04.2026 17:17:60", desc: "yag", amount: 410 },
+        { date: "22.04.2026 18:44:00", desc: "şeker", amount: 50 },
+        { date: "23.04.2026 11:24:60", desc: "detarjan", amount: 80 },
+        { date: "23.04.2026 12:36:60", desc: "mARKET", amount: 110 },
+        { date: "23.04.2026 18:15:00", desc: "sogan", amount: 1500 },
+        { date: "23.04.2026 20:46:00", desc: "pazar yılmaz", amount: 1650 },
+        { date: "24.04.2026 10:48:00", desc: "market", amount: 810 },
+        { date: "24.04.2026 15:11:60", desc: "tolga kuyruk", amount: 25000 },
+        { date: "24.04.2026 16:39:60", desc: "kunefe", amount: 800 },
+        { date: "24.04.2026 19:48:00", desc: "market", amount: 200 },
+        { date: "25.04.2026 17:19:60", desc: "yag şeker", amount: 520 },
+        { date: "25.04.2026 20:26:60", desc: "pazar yılmaz", amount: 1050 },
+        { date: "26.04.2026 22:34:60", desc: "sogan", amount: 3500 },
+        { date: "28.04.2026 16:02:00", desc: "künefe", amount: 1000 },
+        { date: "28.04.2026 21:08:00", desc: "pazar yılmaz", amount: 1150 }
+    ];
+
+    // ---------- 3. KREDİ KARTI GİDERLERİ ----------
+    const krediTransactions = [
+        { date: "01.04.2026 11:08:60", desc: "yağ", amount: 410 },
+        { date: "02.04.2026 12:27:60", desc: "hayrettın ayran", amount: 3500 },
+        { date: "02.04.2026 12:27:60", desc: "eski alınan kırıntı parası", amount: 11200 },
+        { date: "03.04.2026 15:58:60", desc: "kömürcü", amount: 8000 },
+        { date: "03.04.2026 15:58:60", desc: "et kredi kart", amount: 10000 },
+        { date: "04.04.2026 13:03:00", desc: "ayran", amount: 9350 },
+        { date: "04.04.2026 14:37:00", desc: "uncu kart ile", amount: 20000 },
+        { date: "07.04.2026 11:08:60", desc: "kaşarcı", amount: 4000 },
+        { date: "07.04.2026 11:08:60", desc: "motorun sigortası", amount: 5710 },
+        { date: "07.04.2026 11:08:60", desc: "alparslan eft", amount: 14000 },
+        { date: "07.04.2026 11:19:00", desc: "yılmaz pazar et eft", amount: 9000 },
+        { date: "08.04.2026 12:51:00", desc: "et eft", amount: 9600 },
+        { date: "09.04.2026 13:16:00", desc: "kolacı", amount: 2910 },
+        { date: "10.04.2026 12:42:60", desc: "tavukçu eft", amount: 4000 },
+        { date: "10.04.2026 12:42:60", desc: "yağ kart ile", amount: 410 },
+        { date: "10.04.2026 20:46:60", desc: "sogan", amount: 1000 },
+        { date: "11.04.2026 12:31:60", desc: "et eft", amount: 8950 },
+        { date: "14.04.2026 11:12:60", desc: "pazarcı maşo eft", amount: 17000 },
+        { date: "15.04.2026 11:28:60", desc: "tavukçu ömer eft", amount: 6000 },
+        { date: "16.04.2026 12:04:00", desc: "et kart ile", amount: 8965 },
+        { date: "16.04.2026 12:04:60", desc: "alparslan eft", amount: 10750 },
+        { date: "16.04.2026 12:56:00", desc: "pazar eft", amount: 7400 },
+        { date: "16.04.2026 14:37:60", desc: "baharatçı eft", amount: 4000 },
+        { date: "17.04.2026 10:03:00", desc: "kaşarcı eft", amount: 4000 },
+        { date: "17.04.2026 13:09:60", desc: "tavukçu eft", amount: 5000 },
+        { date: "17.04.2026 13:11:00", desc: "yılmaz kartından ödenen doğalgaz eft", amount: 10000 },
+        { date: "18.04.2026 12:06:60", desc: "ambalaj eft", amount: 8000 },
+        { date: "18.04.2026 12:22:60", desc: "AYRAN EFT", amount: 9760 },
+        { date: "18.04.2026 15:00:00", desc: "ET YILMAZ 1200 TL BORÇ", amount: 3685 },
+        { date: "19.04.2026 09:31:00", desc: "et eft", amount: 13340 },
+        { date: "21.04.2026 09:38:60", desc: "alparslan eft", amount: 11000 },
+        { date: "21.04.2026 14:28:60", desc: "kolacı yavuz kart ile", amount: 7000 },
+        { date: "23.04.2026 11:24:60", desc: "alparslan eft", amount: 3000 },
+        { date: "23.04.2026 12:51:00", desc: "HAK TAVUKÇU EFT", amount: 3680 },
+        { date: "23.04.2026 13:38:00", desc: "pepsi kola eft", amount: 1470 },
+        { date: "24.04.2026 10:48:00", desc: "kaşarci eft", amount: 4000 },
+        { date: "25.04.2026 11:48:00", desc: "silikon", amount: 150 },
+        { date: "25.04.2026 14:26:00", desc: "uncu kart ile", amount: 18000 },
+        { date: "28.04.2026 13:29:00", desc: "yılmaz karttından eski ödenen doğalgaz", amount: 30000 },
+        { date: "28.04.2026 13:29:00", desc: "alparslan eft", amount: 10000 },
+        { date: "30.04.2026 12:47:60", desc: "agadan alınan et eft", amount: 17900 },
+        { date: "30.04.2026 12:49:00", desc: "alparlan eft", amount: 4000 },
+        { date: "30.04.2026 12:49:00", desc: "alparlan eft", amount: 1000 }
+    ];
+
+    // toplamlar
+    const totalNakit = nakitTransactions.reduce((s, t) => s + t.amount, 0);
+    const totalKredi = krediTransactions.reduce((s, t) => s + t.amount, 0);
+    const totalNakitKredi = totalNakit + totalKredi; // 420.180 TL
+    const ciroNisan = 1048628.65;
+    const netKar = ciroNisan - (totalNakit + totalKredi + totalPersonnel);
+
+    // ---------- RENDER FONKSİYONLARI ----------
+    function renderOverview() {
+        return `
+            <div class="content-card">
+                <div class="card-header">📈 Nisan Ayı Performans Özeti</div>
+                <div class="card-body">
+                    <div class="summary-stats">
+                        <div class="stat-card"><h4>📀 Toplam Ciro</h4><div class="stat-number">${ciroNisan.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</div><div class="result-badge">Nisan 2026</div></div>
+                        <div class="stat-card"><h4>🧾 Nakit Gider</h4><div class="stat-number">${totalNakit.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</div></div>
+                        <div class="stat-card"><h4>💳 Kredi Kartı Gider</h4><div class="stat-number">${totalKredi.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</div></div>
+                        <div class="stat-card"><h4>👥 Personel Gideri</h4><div class="stat-number">${totalPersonnel.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</div></div>
+                    </div>
+                    <div class="stat-card profit" style="background:linear-gradient(135deg,#1f3b2c,#2b5a42); margin-top:8px;">
+                        <h4 style="color:#ffecb3;">✨ NET KAR (Ciro - Tüm Giderler)</h4>
+                        <div class="stat-number" style="color:#facc15;">${netKar.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</div>
+                        <div class="result-badge" style="color:#e2f0e6;">📆 1.048.628,65 ₺ - (${totalNakit.toLocaleString('tr-TR')} + ${totalKredi.toLocaleString('tr-TR')} + ${totalPersonnel.toLocaleString('tr-TR')})</div>
+                    </div>
+                    <div class="warning-note">
+                        ⚠️ <strong>Geçen aydan Yusuf Usta'ya 110.820 TL borç</strong> bulunmaktadır. Bu borç hesaplamalara dahil edilmemiştir.<br>
+                        🏠 Kira notu: Nisan ayı için <strong>45.000 TL kira ödenmemiştir</strong>, yukarıdaki giderlere eklenmemiştir.
+                    </div>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="card-header">📋 Kesin Kar/Zarar Tablosu</div>
+                <div class="card-body">
+                    <table style="width:100%">
+                        <tr><th>Kalem</th><th>Tutar (₺)</th></tr>
+                        <tr><td>Nisan Cirosu</td><td class="amount-right">${ciroNisan.toLocaleString('tr-TR', {minimumFractionDigits:2})}</td></tr>
+                        <tr><td>Nakit Gider</td><td class="amount-right">${totalNakit.toLocaleString('tr-TR', {minimumFractionDigits:2})}</td></tr>
+                        <tr><td>Kredi Kartı Gideri</td><td class="amount-right">${totalKredi.toLocaleString('tr-TR', {minimumFractionDigits:2})}</td></tr>
+                        <tr><td>Personel Gideri</td><td class="amount-right">${totalPersonnel.toLocaleString('tr-TR', {minimumFractionDigits:2})}</td></tr>
+                        <tr class="total-row"><td><strong>Toplam Gider</strong></td><td class="amount-right"><strong>${(totalNakit+totalKredi+totalPersonnel).toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</strong></td></tr>
+                        <tr style="background:#e6f7ec;"><td><strong>NET KÂR</strong></td><td class="amount-right positive" style="color:#15803d; font-weight:800;">${netKar.toLocaleString('tr-TR', {minimumFractionDigits:2})} ₺</td></tr>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderPersonel() {
+        let rows = personnel.map(p => `<tr><td>${p.name}</td><td class="amount-right">${p.daily.toLocaleString('tr-TR')} ₺</td><td class="amount-right">${p.days}</td><td class="amount-right">${p.total.toLocaleString('tr-TR')} ₺</td></tr>`).join('');
+        return `<div class="content-card"><div class="card-header">👥 Personel Giderleri (Kasadan ödeme)</div><div class="card-body"><div class="table-wrapper"><table><thead><tr><th>Personel</th><th>Günlük Ücret</th><th>Gün</th><th>Toplam (₺)</th></tr></thead><tbody>${rows}<tr class="total-row"><td colspan="3"><strong>Toplam Personel</strong></td><td class="amount-right"><strong>${totalPersonnel.toLocaleString('tr-TR')} ₺</strong></td></tr></tbody></table></div><div class="warning-note" style="margin-top:16px;">💡 Gamze: 27.000 TL tam ay maaşı üzerinden 10 gün = 9.000 TL</div></div></div>`;
+    }
+
+    function renderNakit() {
+        let rows = nakitTransactions.map(t => `<tr><td>${t.date}</td><td>${t.desc}</td><td><span class="method-nakit">Nakit</span></td><td class="amount-right">${t.amount.toLocaleString('tr-TR')} ₺</td></tr>`).join('');
+        return `<div class="content-card"><div class="card-header">💰 Kasadan Nakit Giderler (PDF tam döküm)</div><div class="card-body"><div class="table-wrapper"><table><thead><tr><th>Tarih</th><th>Açıklama</th><th>Tür</th><th>Tutar</th></tr></thead><tbody>${rows}<tr class="total-row"><td colspan="3"><strong>Toplam Nakit Gider</strong></td><td class="amount-right"><strong>${totalNakit.toLocaleString('tr-TR')} ₺</strong></td></tr></tbody></table></div></div></div>`;
+    }
+
+    function renderKredi() {
+        let rows = krediTransactions.map(t => `<tr><td>${t.date}</td><td>${t.desc}</td><td><span class="method-kredi">Kredi Kartı / EFT</span></td><td class="amount-right">${t.amount.toLocaleString('tr-TR')} ₺</td></tr>`).join('');
+        return `<div class="content-card"><div class="card-header">💳 Kredi Kartı & EFT Giderleri</div><div class="card-body"><div class="table-wrapper"><table><thead><tr><th>Tarih</th><th>Açıklama</th><th>Tür</th><th>Tutar</th></tr></thead><tbody>${rows}<tr class="total-row"><td colspan="3"><strong>Toplam Kredi Kartı Gideri</strong></td><td class="amount-right"><strong>${totalKredi.toLocaleString('tr-TR')} ₺</strong></td></tr></tbody></table></div><div class="warning-note">✅ PDF'deki "Muhtelif Gider Toplamı" (420.180 TL) = Nakit ${totalNakit.toLocaleString('tr-TR')} + Kredi Kartı ${totalKredi.toLocaleString('tr-TR')}</div></div></div>`;
+    }
+
+    function renderAllGider() {
+        const all = [...nakitTransactions.map(t => ({...t, type: 'Nakit'})), ...krediTransactions.map(t => ({...t, type: 'Kredi Kartı'}))];
+        all.sort((a,b)=>a.date.localeCompare(b.date));
+        let rows = all.map(t => `<tr><td>${t.date}</td><td>${t.desc}</td><td><span class="${t.type === 'Nakit' ? 'method-nakit' : 'method-kredi'}">${t.type}</span></td><td class="amount-right">${t.amount.toLocaleString('tr-TR')} ₺</td></tr>`).join('');
+        return `<div class="content-card"><div class="card-header">📋 Tüm Giderler (Nakit + Kredi Kartı / EFT)</div><div class="card-body"><div class="table-wrapper"><table><thead><tr><th>Tarih</th><th>Açıklama</th><th>Ödeme Türü</th><th>Tutar</th></tr></thead><tbody>${rows}<tr class="total-row"><td colspan="3"><strong>Toplam Nakit+Kredi Kartı</strong></td><td class="amount-right"><strong>${totalNakitKredi.toLocaleString('tr-TR')} ₺</strong></td></tr></tbody></table></div><div class="info-note" style="background:#fef2e0; padding:12px; border-radius:18px; margin-top:18px;">📌 Personel giderleri (366.000 TL) bu tabloya dahil değildir. Toplam tüm gider = ${(totalNakitKredi+totalPersonnel).toLocaleString('tr-TR')} TL</div></div></div>`;
+    }
+
+    // sekmeler
+    let activeTab = 'overview';
+    const container = document.getElementById('tabContent');
+    function renderCurrentTab() {
+        if (activeTab === 'overview') container.innerHTML = renderOverview();
+        else if (activeTab === 'personel') container.innerHTML = renderPersonel();
+        else if (activeTab === 'nakit') container.innerHTML = renderNakit();
+        else if (activeTab === 'kredi') container.innerHTML = renderKredi();
+        else if (activeTab === 'allgider') container.innerHTML = renderAllGider();
+    }
+
+    function initTabs() {
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeTab = btn.getAttribute('data-tab');
+                renderCurrentTab();
+                window.scrollTo({ top: 200, behavior: 'smooth' });
+            });
+        });
+    }
+
+    renderCurrentTab();
+    initTabs();
+</script>
+</body>
+</html>
